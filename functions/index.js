@@ -182,6 +182,27 @@ app.post("/deletetask", (req, res) => {
 })
 
 
+app.post("/tasklist", (req, res) => cors(req, res, () => {
+    console.log("tasklist")
+    db.collection("Tasks")
+    .get()
+    .then(snap => {
+        let tasks = snap.docs.map(doc => doc.data())
+        return res.send({
+            response : tasks,
+            status : true
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        return res.send({
+            response : `Failed to get tasks`,
+            status : false
+        })
+    })
+}))
+
+
 
 
 
